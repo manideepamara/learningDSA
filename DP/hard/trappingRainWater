@@ -1,5 +1,5 @@
 
-
+    // please consider for more information `https://leetcode.com/problems/trapping-rain-water/`
 
     ## time complexity: O(sizeofelements)
     ## space complexity: O(sizeofelements)
