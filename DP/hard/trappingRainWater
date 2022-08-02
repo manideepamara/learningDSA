@@ -1,0 +1,47 @@
+
+
+
+    ## time complexity: O(sizeofelements)
+    ## space complexity: O(sizeofelements)
+    
+    //calculting minimum of two elements
+    int min(int a,int b){
+        return a<b?a:b;
+    }
+    //actual function passes heights of all blocks and returns totalWaterTrapped in all the blocks
+    int trap(vector<int>& height) {
+        // need to calculate maxheight so far blocks visited traversing both from left anf
+        // right side
+        
+        // to maintain the heights using array. 
+        // rightMax[i] -> maxHeight of blocks so far i traversing from right to left
+        // leftMax[i] -> maxHeight of blocks so far i traversing fromm left to right 
+        
+        int size = height.size();
+        int rightMax[size],leftMax[size];
+        int maxHeightSoFar = 0;
+        // populating left max array
+        for(int i=0;i<size;i++){
+            //updating maxHeightSoFar if current block height is greater than maxheight of all 
+            // blocks so far visited upto ith block
+            if(height[i]>maxHeightSoFar)
+                maxHeightSoFar = height[i];
+            //assigning maxHeight to leftMax[i] after operations at that block
+            leftMax[i] = maxHeightSoFar;
+        }
+        
+        //same for the right max array but in opposite direction
+        maxHeightSoFar = 0;
+        for(int i=size-1;i>=0;i--){
+            if(height[i]>maxHeightSoFar)
+                maxHeightSoFar = height[i];
+            //assigning maxHeight to rightMax[i] after operations at that block
+            rightMax[i] = maxHeightSoFar;
+        }
+        int totalWaterTrapped = 0;
+        
+        for(int i=0;i<size;i++){
+            totalWaterTrapped += (min(rightMax[i],leftMax[i])-height[i]);
+        }
+        return totalWaterTrapped;
+    }
