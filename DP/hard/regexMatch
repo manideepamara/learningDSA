@@ -1,0 +1,68 @@
+
+
+    ##Time complexity: O(sLen*pLen)
+    ##Space complexity: O(sLen*pLen)
+    ##for more information, Please refer https://leetcode.com/problems/regular-expression-matching
+    
+    bool isMatch(string s, string p) {
+        //tabulation method
+        //creating 2D matrix where row represent s and column represent p
+        // we are using to fill the table by using following condition
+        // T[i][j] -> table with i represents ith character in s and j represents jth character in p;
+        //Note : s and p are 0-based indxing
+        //in table s and p are 1-based indexing 
+        //ex: T[i][j] means regex matching for s till i-1 charcters with p till j-1 characters.
+        
+        int sLen  = s.length();
+        int pLen = p.length();
+        vector<vector<bool>> T(sLen+1, vector<bool>(pLen+1,false));
+        T[0][0]=true; // since empty with empty always true
+        //case for empty string and 
+        //fill true till pattern contains * in even places in continuos manner
+        for(int j=1;j<pLen;j+=2){//since p is 0-based so checking at 1,3,5....
+            if(p[j]=='*'){
+                T[0][j]=true;
+                T[0][j+1]=true;
+            }else{
+                break; //stop means * is not in even places of pattern
+            }
+        }
+        
+        //normal cases
+        //case 1: p[j-1]=='*'(current vsisiting char in pattern is *)
+        //        two possibilities 
+        //
+        //        1. skipping preceding character assuming 0 occurences.(default case)
+        //        so, expr will be
+        //        T[i][j] = T[i][j-2] (only 2)
+        //        2. considering previous character 
+        //        (conditional case p[j-2] = s[i-1] or p[j-2] = '.' preceeding character to *        
+        //        in pattern is either macthes with current visiting character in string or a        
+        //        dot ".")
+        //        T[i][j] = T[i-1][j]||T[i][j-2] (include 1 also.)
+        //
+        //case 2: p[j-1]=="." or p[j-1]==s[i-1] (current visiting character in pattern is             
+        //        dot"." or matches with current visiting character in string)
+        //
+        //case 3: False if both cases fails
+        //
+        
+        for(int i=1;i<=sLen;i++){//i is visiting string
+            for(int j=1;j<=pLen;j++){//j is visiting pattern
+                //case 1.
+                if(p[j-1] == '*'){
+                    T[i][j] = T[i][j-2]; //point 1 in case 1
+                    if(p[j-2]=='.'||p[j-2]==s[i-1])  //point 2 in case 1
+                        T[i][j] = T[i][j-2]||T[i-1][j]; 
+                }
+                //case 2
+                else if(p[j-1]=='.' || p[j-1]==s[i-1])
+                    T[i][j] = T[i-1][j-1];
+                //case 3
+                else //redundant case already filled table with false during initialisation
+                    T[i][j] = false;
+            }
+        }
+        
+        return T[sLen][pLen];
+    }
