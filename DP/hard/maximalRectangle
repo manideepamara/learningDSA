@@ -1,0 +1,58 @@
+
+
+    ##Time complexity: O(rows*cols)
+    ##Space complexity: O(rows*cols)
+    #for complete ref: https://leetcode.com/problems/maximal-rectangle
+    
+    int calculateMaxAreaUnderHistogram(int bar[],int n){
+        //main logic lies here
+        stack<int> st;
+        int maxArea = 0;
+        int i =0;
+        while(i<n){
+             if(st.empty()||(bar[st.top()]<bar[i]))
+                 st.push(i++);
+             else{
+                     int top = st.top();
+                     st.pop();
+                     maxArea = max(maxArea,(st.empty()?i:(i-1-st.top()))*bar[top]);
+                 }
+                
+        }
+        while(!st.empty()){
+             int top = st.top();
+             st.pop();
+             maxArea = max(maxArea,(st.empty()?i:(i-1-st.top()))*bar[top]);
+        }
+        return maxArea;
+    }
+    int maximalRectangle(vector<vector<char>>& matrix) {
+        //it is an extension of maximum area of histogram 
+        
+        int rows = matrix.size();
+        int cols = matrix[0].size();
+        int m[rows][cols];
+        for(int j=0;j<cols;j++){
+            if(matrix[0][j]=='1')
+                m[0][j]=1;
+            else
+                m[0][j]=0;
+        }
+        for(int i=1;i<rows;i++){
+            for(int j=0;j<cols;j++){
+                if(matrix[i][j]=='1'){
+                    m[i][j]=1+m[i-1][j];
+                }else{
+                    m[i][j]=0;
+                }
+               // cout << (int)matrix[i][j] << " ";
+            }
+           // cout << "\n";
+        }
+        int area = 0;
+        for(auto bar : m){
+            area = max(area,calculateMaxAreaUnderHistogram(bar,cols));
+        }
+        return area;
+        
+    }
