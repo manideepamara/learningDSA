@@ -1,0 +1,41 @@
+
+
+    //Approach 1
+    int longestValidParentheses(string s) {
+        // very optimised approch 
+        //with O(1) space and O(n)
+        //maintaining two pointers left and right which holds left and right brace frequency
+        //as traversing from left to right, always follow the condition left >= right 
+        //at any point of time if left == right means balanced so update max Length if balanced length is max
+        //make right and left 0 if right > lefyt
+        //similarly traversing vice versa
+        
+        //this works only if entire string contains one type of closed and open braces
+        int n = s.length();
+        int right=0,left=0,maxLen=0;
+        for(int i=0;i<n;i++){
+            
+            if(s[i]=='(')
+                left++;
+            else
+                right++;
+            if(left==right)
+                maxLen = max(maxLen,2*left); //for length both left and right count
+            if(right>left)
+                right=left=0; 
+                
+        }
+        left=right=0;
+        for(int i=n-1;i>=0;i--){
+            if(s[i]=='(')
+                left++;
+            else
+                right++;
+            if(left==right)
+                maxLen = max(maxLen,2*left);
+            if(left>right)
+                right=left=0;
+        }
+        return maxLen;
+    }
+    
