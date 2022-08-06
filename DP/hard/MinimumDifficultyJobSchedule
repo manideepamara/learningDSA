@@ -1,0 +1,28 @@
+
+
+    //with O(n*n*d) time and O(d*n) space
+    int minDifficulty(vector<int>& jobDifficulty, int d) {
+        int jobLen = jobDifficulty.size();
+        if(jobLen<d)
+            return -1;
+        int dp[d][jobLen];
+        for(int i=jobLen-1;i>=0;i--){ //for day 1
+            dp[0][i] = i==jobLen-1?jobDifficulty[i]:max(jobDifficulty[i],dp[0][i+1]);
+        }
+        //from day 2 onwards
+        for(int day =1;day<d;day++){
+            int numberOfCutsPossible = jobLen-day ;
+            for(int cutStart = 0;cutStart<numberOfCutsPossible;cutStart++){
+                int maxSoFar = 0;
+                int answer = INT_MAX;
+                for(int cut = cutStart;cut<numberOfCutsPossible;cut++){
+                    maxSoFar = max(maxSoFar,jobDifficulty[cut]);
+                    answer = min(answer,maxSoFar+dp[day-1][cut+1]);
+                }
+                dp[day][cutStart]=answer;
+                //cout  << "-";
+            }
+            //cout << "\n";
+        }
+        return dp[d-1][0];
+    }
