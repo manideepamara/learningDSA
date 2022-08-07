@@ -1,0 +1,24 @@
+
+
+    //https://leetcode.com/problems/best-time-to-buy-and-sell-stock-iv/(for more info.)
+    //with O(n*n) space and time
+    int maxProfit(int k, vector<int>& prices) {
+        int days = prices.size();
+        if(days==0)
+            return 0;
+        int T[k+1][days];
+        for(int i=0;i<=k;i++){//at 0th day profit is 0;
+            T[i][0]=0;
+        } 
+        for(int j=0;j<days;j++){//profit is zero with 0 transactions on all days
+            T[0][j] = 0;
+        }
+        for(int i=1;i<=k;i++){
+            int maxDiff = T[i-1][0]-prices[0];
+            for(int j=1;j<days;j++){
+                T[i][j] = max(T[i][j-1],prices[j]+maxDiff);
+                maxDiff = max(maxDiff,T[i-1][j]-prices[j]);
+            }
+        }
+        return T[k][days-1];
+    }
