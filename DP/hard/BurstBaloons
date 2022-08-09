@@ -1,0 +1,26 @@
+
+    //https://leetcode.com/problems/burst-balloons/submissions/
+    //with O(n*n) space and O(n*n*n) time
+    int maxCoins(vector<int>& nums) {
+        int n = nums.size();
+        int b[n+2];
+        for(int i=1;i<=n;i++)
+            b[i]=nums[i-1];
+        b[0]=1;
+        b[n+1]=1;  
+        int dp[n+2][n+2];
+        memset(dp,0,sizeof(dp));
+        for(int len =1;len<=n;len++){
+            //cout << len << "\n";
+            for(int left=1,right=len;right<=n;left++,right++){
+                //window with left and right indices as boundaries
+                // burst the last ballon in that window and find max with previous calcualtions
+                //cout << left << "->" << right << "\n";
+                for(int last = left;last<=right;last++){
+                    //cout << last << "\n";
+                    dp[left][right] = max(dp[left][right],(dp[left][last-1]+ (b[left-1]*b[last]*b[right+1])+dp[last+1][right]));
+                }
+            } 
+        }
+        return dp[1][n];
+    }       
