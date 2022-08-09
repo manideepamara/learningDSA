@@ -1,0 +1,20 @@
+
+    //https://leetcode.com/problems/minimum-insertion-steps-to-make-a-string-palindrome/
+    //with O(n*n) space and time
+    int minInsertions(string s) {
+        int n = s.length();
+        int dp[n+1][n+1];
+        memset(dp,0,sizeof(dp));
+        for(int i=1;i<=n;i++){
+            for(int j=n;j>=1;j--){
+                //cout << s[i-1] << "<->" << s[j-1] << "---";
+                if(s[i-1]==s[j-1])
+                    dp[i][n-j+1]=1+dp[i-1][n-j];
+                else
+                    dp[i][n-j+1]=max(dp[i][n-j],dp[i-1][n-j+1]);
+                //cout << dp[i][n-j+1] << ", ";
+            }
+            //cout << "\n";
+        }
+        return n-dp[n][n];
+    }
