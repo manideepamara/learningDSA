@@ -1,0 +1,29 @@
+
+
+
+    // with O(n*k) space and O(k*k*n) time
+    int superEggDrop(int k, int n) {
+        int eggDrop[n+1][k+1];
+        //need 0 trials for for 0 floors 
+        //need 1 trail for 1 floor
+        for(int i=0;i<=k;i++){
+            eggDrop[0][i]=0;
+            eggDrop[1][i]=1;
+        }
+        
+        //need n trails with single egg for n floors
+        for(int j=2;j<=n;j++){
+            eggDrop[j][1]=j;
+        }
+        for(int i=2;i<=n;i++){ // eggs
+            for(int j=2;j<=k;j++){ //floors
+                eggDrop[i][j]=INT_MAX;
+                for(int x=1;x<=i;x++){
+                    eggDrop[i][j]=min(eggDrop[i][j],1+max(eggDrop[x-1][j-1],eggDrop[i-x][j]));
+                }
+            }
+        }
+        return eggDrop[n][k];
+    }
+
+
