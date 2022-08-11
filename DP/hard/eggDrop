@@ -27,3 +27,20 @@
     }
 
 
+
+    with O(n) space and O(logn*k) time
+    //log n is finding  n as we are doubling its count every time for k eggs in logarthmic time it will reach
+    int superEggDrop(int k, int n) {
+        int dp[k+1];
+        memset(dp,0,sizeof(dp));
+        int m;
+        for(m=0;dp[k]<n;m++){
+            //with move m
+            for(int x = k;x>0;x--){
+                dp[x] = 1+dp[x]+dp[x-1];
+            }
+        }
+        return m;
+    }
+
+
