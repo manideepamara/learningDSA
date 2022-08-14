@@ -1,0 +1,28 @@
+
+
+    // https://leetcode.com/problems/word-break/
+    // with O(n) space and O(n*n) time
+    bool wordBreak(string s, vector<string>& wordDict) {
+        map<string,bool> mp;
+        int n = s.length();
+        bool dp[n+1];
+        memset(dp,0,sizeof(dp));
+        for(auto each: wordDict){
+            mp[each]=true;
+        }
+        dp[0] = true;
+        for(int i = 1;i<=n;i++){
+            for(int j=0;j<i;j++){
+                //cout<< s.substr(j,i-j) << " ";
+                if(dp[j] && mp.count(s.substr(j,i-j))!=0){
+                    dp[i]=true;
+                    break;
+                }
+            }
+            //cout << "\n";
+        }
+        /*for( auto each: mp){
+            cout << each.first << "->" <<each.second<< "\n";
+        }*/
+        return dp[n];
+    }
