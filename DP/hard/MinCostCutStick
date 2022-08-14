@@ -1,0 +1,24 @@
+
+    //with O(n*n) size and O(n*n*n) time where n = numbers of positions where cuts possible + 2
+    //https://leetcode.com/problems/minimum-cost-to-cut-a-stick/ for more info
+    int minCost(int n, vector<int>& cuts) {
+        
+        cuts.insert(cuts.begin(),0);
+        cuts.push_back(n);
+        int Len = cuts.size();
+        sort(cuts.begin(),cuts.end());
+        int dp[Len][Len];
+        for(int len = 2; len<=Len;len++){
+            for(int i=0,j=i+len-1;j<Len;i++,j++){
+                if(len == 2)
+                   dp[i][j]=0;
+                else{
+                    dp[i][j]=INT_MAX;
+                    for(int split = i+1;split<j;split++){
+                        dp[i][j] = min(dp[i][j],cuts[j]-cuts[i]+dp[i][split]+dp[split][j]);
+                    }
+                }
+            }
+        }
+        return dp[0][Len-1];
+    }
