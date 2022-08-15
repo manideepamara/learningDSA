@@ -1,0 +1,37 @@
+
+    
+    //here I am maintaining datastructure 
+    //which has key is number which points to pair{1: key*frequency(key) 2: previous key}
+    //with O(k) space and time where k is distinct numbers count in nums array
+    //https://leetcode.com/problems/delete-and-earn/
+    int deleteAndEarn(vector<int>& nums) {
+        sort(nums.begin(),nums.end());
+        map<int,pair<int,int>> mp;
+        int prev=nums[0];
+        for(auto num:nums){
+          
+            if(mp.count(num)==0)
+                mp[num]={num,prev};
+            else
+                mp[num]={mp[num].first+num,mp[num].second};
+             if(num!=prev)
+                prev=num;
+        }   
+        
+        int maxV = mp.begin()->second.first;
+        //initialise max with min key sum.
+        for(auto it = ++mp.begin();it!=mp.end();it++){
+            if(it->first-1 == it->second.second){
+                int a = it->second.first+( mp[it->second.second].second != it->second.second?
+                                          mp[mp[it->second.second].second].first:0);
+                int b =mp[it->second.second].first;
+                it->second.first = max(a,b);
+            }else{
+                it->second.first+=mp[it->second.second].first;
+            }
+            maxV = max(maxV,it->second.first);
+        }
+       
+        
+        return maxV;
+    }
