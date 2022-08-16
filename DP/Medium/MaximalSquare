@@ -1,0 +1,21 @@
+
+    //with O(n*n) space and time 
+    //https://leetcode.com/problems/maximal-square/submissions/
+    int maximalSquare(vector<vector<char>>& matrix) {
+        int m = matrix.size();
+        int n = matrix[0].size();
+        int dp[m][n];
+        int maxV = 0;
+        for(int i = 0;i<m;i++){
+            for(int j=0;j<n;j++){
+                dp[i][j] = matrix[i][j]-'0';
+                if(dp[i][j]==1&&i&&j){
+                    dp[i][j] = 1+min(dp[i-1][j-1],min(dp[i-1][j],dp[i][j-1]));
+                }
+                //cout << maxV <<"," << dp[i][j] <<" ";
+                maxV = max(maxV,dp[i][j]);
+            }
+            //cout << "\n";
+        }
+        return maxV*maxV;
+    }
