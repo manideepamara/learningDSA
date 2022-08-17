@@ -1,0 +1,37 @@
+
+
+ //with O(n*n) time and reduced space compared to dp;
+ //https://leetcode.com/problems/palindromic-substrings/
+    int countSubstrings(string s) {
+        int n = s.length();
+        int count = 0;
+        map<string,bool> mp;
+        count = n;
+        for(int i=0;i<n;i++){
+            int low = i-1;
+            int high = i+1;
+            while(low>=0 && s[i]==s[low]){
+                low--;
+                if(mp.count(to_string(low)+"-"+to_string(high))==0){
+                    mp[to_string(low)+"-"+to_string(high)]=1;
+                    count++;
+                }
+            }
+            while(high<n && s[i]==s[high]){
+                high++;
+                 if(mp.count(to_string(low)+"-"+to_string(high))==0){
+                    mp[to_string(low)+"-"+to_string(high)]=1;
+                    count++;
+                }
+            }
+            while(low>=0 && high<n && s[low]==s[high]){
+                high++;
+                low--;
+                if(mp.count(to_string(low)+"-"+to_string(high))==0){
+                    mp[to_string(low)+"-"+to_string(high)]=1;
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
