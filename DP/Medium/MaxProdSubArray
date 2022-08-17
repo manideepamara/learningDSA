@@ -1,0 +1,16 @@
+//with O(n) timme and constant space
+//https://leetcode.com/problems/maximum-product-subarray
+    int maxProduct(vector<int>& nums) {
+        int maxProdSoFar = nums[0];
+        int minProd = nums[0];
+        int maxProd = nums[0];
+        int n = nums.size();
+        for(int i = 1;i<n;i++){
+            int temp = max(maxProd*nums[i],max(minProd*nums[i],nums[i]));
+            minProd = min(maxProd*nums[i],min(minProd*nums[i],nums[i]));
+            maxProd = temp;
+            maxProdSoFar = max(maxProdSoFar,maxProd);
+                     
+        }
+        return maxProdSoFar;
+    }
