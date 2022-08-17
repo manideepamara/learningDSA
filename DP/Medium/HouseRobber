@@ -1,0 +1,10 @@
+
+//with O(n) time and constant space;
+//https://leetcode.com/problems/house-robber
+    int rob(vector<int>& nums) {
+        int n = nums.size();
+        for(int i=1;i<n;i++){
+            nums[i] = max(nums[i]+(i-2>=0 ?nums[i-2]:0),nums[i-1]);
+        }
+        return nums[n-1];
+    }
