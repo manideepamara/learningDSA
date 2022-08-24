@@ -1,0 +1,17 @@
+   //https://leetcode.com/problems/counting-bits/
+   //with O(n) time and space
+    vector<int> countBits(int n) {
+        if(n==0)
+            return {0};
+        vector<int> dp(n+1,0);
+        dp[1]=1;
+        int start = 1;
+        int count = 2;
+        while(count<=n){
+            dp[count++]=dp[start];
+            if(count<=n)
+                dp[count++]=1+dp[start];
+            start++;
+        }
+        return dp;
+    }
