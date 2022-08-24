@@ -1,0 +1,5 @@
+    //with constant space and time;
+    //https://leetcode.com/problems/divisor-game/
+    bool divisorGame(int n) {
+        return n%2==0;
+    }
