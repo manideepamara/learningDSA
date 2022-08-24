@@ -1,0 +1,13 @@
+    //with O(n) time and constant space
+    //https://leetcode.com/problems/maximum-subarray/
+    int maxSubArray(vector<int>& nums) {
+        int maxSoFar = nums[0];
+        int maxSum = nums[0];
+        int n = nums.size();
+        for(int i=1;i<n;i++){
+            maxSum = max(maxSum+nums[i],nums[i]);
+            maxSoFar = max(maxSoFar,maxSum);
+        }
+        return maxSoFar;
+        
+    }
