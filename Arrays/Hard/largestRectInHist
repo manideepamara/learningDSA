@@ -1,0 +1,26 @@
+
+    //with O(n) time and space
+    //https://leetcode.com/problems/largest-rectangle-in-histogram
+    int largestRectangleArea(vector<int>& heights) {
+        stack<int> st;
+        int i=0;
+        int n = heights.size();
+        int maxArea = 0;
+        while(i<n){
+            if(st.empty()||heights[st.top()]<=heights[i])
+                st.push(i++);
+            else{
+                int top =st.top();
+                st.pop();
+                int area = (st.empty()?i:i-1-st.top())*heights[top];
+                maxArea = max(area,maxArea);
+            }
+        }
+        while(!st.empty()){
+            int top = st.top();
+            st.pop();
+            int area = (st.empty()?i:i-1-st.top())*heights[top];
+            maxArea = max(area,maxArea);
+        }
+        return maxArea;
+    }
