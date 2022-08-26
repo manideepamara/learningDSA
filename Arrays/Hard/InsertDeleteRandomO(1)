@@ -1,0 +1,45 @@
+//https://leetcode.com/problems/insert-delete-getrandom-o1-duplicates-allowed/
+
+class RandomizedCollection {
+public:
+    vector<int> myList;
+    unordered_map<int,unordered_set<int>> mp;
+    RandomizedCollection() {
+        
+    }
+    
+    bool insert(int val) {
+        myList.push_back(val);
+        mp[val].insert(myList.size()-1);
+        return mp[val].size()==1;
+        
+    }
+    
+    bool remove(int val) {
+        if(mp.count(val)==0 || mp[val].size()==0)
+            return false;
+        int index = (*(mp[val].begin()));
+        mp[val].erase(index);
+        if(index!=myList.size()-1){
+            int lastEle = myList[myList.size()-1];
+            myList[index] = lastEle;
+            mp[lastEle].erase(myList.size()-1);
+            mp[lastEle].insert(index);
+        }
+        myList.pop_back();
+        return true;
+    }
+    
+    int getRandom() {
+        int index = rand()%myList.size();
+        return myList[index];
+    }
+};
+
+/**
+ * Your RandomizedCollection object will be instantiated and called as such:
+ * RandomizedCollection* obj = new RandomizedCollection();
+ * bool param_1 = obj->insert(val);
+ * bool param_2 = obj->remove(val);
+ * int param_3 = obj->getRandom();
+ */
