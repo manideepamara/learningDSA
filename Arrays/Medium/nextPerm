@@ -1,0 +1,17 @@
+    //with O(n) time and constant space
+    //https://leetcode.com/problems/next-permutation
+    void nextPermutation(vector<int>& nums) {
+        int last=nums.size()-1;
+        while(last>0 && (nums[last-1]>=nums[last]))
+            last--;
+        if(last!=0){
+            int n = nums.size()-1;
+            while(nums[last-1]>=nums[n]){
+               n--;
+            }
+            int temp = nums[last-1];
+            nums[last-1]=nums[n];
+            nums[n]=temp;
+        }
+        reverse(nums.begin()+last,nums.end());
+    }
