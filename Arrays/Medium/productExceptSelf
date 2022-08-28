@@ -1,0 +1,23 @@
+
+    //with O(n) space and time
+    //https://leetcode.com/problems/product-of-array-except-self
+    vector<int> productExceptSelf(vector<int>& nums) {
+        int prefix[nums.size()+2];
+        int suffix[nums.size()+2];
+        prefix[0]=prefix[nums.size()+1]=1;
+        suffix[0]=suffix[nums.size()+1]=1;
+        int n =nums.size();
+        for(int i=1;i<=n;i++){
+            prefix[i]=prefix[i-1]*nums[i-1];
+        }
+        for(int i=n;i>0;i--){
+            suffix[i]=suffix[i+1]*nums[i-1];
+        }
+        
+        vector<int> res;
+        for(int i=1;i<=n;i++){
+            res.push_back(prefix[i-1]*suffix[i+1]);
+        }
+        return res;
+        
+    }
