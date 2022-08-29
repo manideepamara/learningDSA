@@ -1,0 +1,48 @@
+    //with O(n*m) time and space
+    //https://leetcode.com/problems/spiral-matrix
+    vector<int> spiralOrder(vector<vector<int>>& matrix) {
+        int n = matrix.size();
+        int m = matrix[0].size();
+        int bottom = matrix.size()-1;
+        int right = matrix[0].size()-1;
+        int top = 0;
+        int left = 0;
+        int count = 0;
+        int i=0,j=0;
+        vector<int> res;
+        while(count<(n*m)){
+            //right
+            j=left;
+            while(count < (n*m) && j<=right){
+                res.push_back(matrix[top][j]);
+                count++;
+                j++;
+            }
+            top++;
+            //bottom
+            i=top;
+            while(count <(n*m) && i<=bottom){
+                res.push_back(matrix[i][right]);
+                count++;
+                i++;
+            }
+            right--;
+            //left
+            j=right;
+            while(count < (n*m) && j>=left){
+                res.push_back(matrix[bottom][j]);
+                count++;
+                j--;
+            }
+            bottom--;
+            //top
+            i=bottom;
+            while(count < (n*m) && i>=top){
+                res.push_back(matrix[i][left]);
+                count++;
+                i--;
+            }
+            left++;
+        }
+        return res;
+    }
