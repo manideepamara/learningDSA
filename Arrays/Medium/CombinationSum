@@ -1,0 +1,18 @@
+
+    //with O(n*n*n) space and time
+    //https://leetcode.com/problems/combination-sum/
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        vector<vector<vector<int>>> res(target+1);
+        res[0].push_back({});
+        for(auto candidate:candidates){
+            for(int i=candidate;i<=target;i++){
+                if(res[i-candidate].size()>0){
+                    for(auto list:res[i-candidate]){
+                        list.push_back(candidate);
+                        res[i].push_back(list);
+                    }
+                }
+            }
+        }
+        return res[target];
+    }
