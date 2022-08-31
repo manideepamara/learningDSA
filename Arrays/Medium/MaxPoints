@@ -1,0 +1,21 @@
+
+    //with O(n) time and constant space
+    //https://leetcode.com/problems/maximum-points-you-can-obtain-from-cards
+    int maxScore(vector<int>& cardPoints, int k) {
+        int tSum = 0;
+        for(auto each:cardPoints)
+            tSum+=each;
+        int n = cardPoints.size();
+        int window = 0;
+        int mv = INT_MIN;
+        for(int i=0;i<n-k;i++){
+            window+=cardPoints[i];
+        }
+        mv = max(mv,tSum-window);
+        for(int i=0,j=n-k;j<n;j++,i++){
+            window-=cardPoints[i];
+            window+=cardPoints[j];
+            mv = max(mv,tSum-window);
+        }
+        return mv;
+    }
