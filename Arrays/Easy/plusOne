@@ -1,0 +1,18 @@
+//https://leetcode.com/problems/plus-one/
+//with O(n) time and constant space
+class Solution {
+public:
+    vector<int> plusOne(vector<int>& digits) {
+        int carry = 1;
+        int n  = digits.size()-1;
+        while(n>=0){
+            int sum = (carry+digits[n]);
+            carry = sum/10;
+            digits[n]=sum%10;
+            n--;
+        }
+        if(carry)
+            digits.insert(digits.begin(),carry);
+        return digits;
+    }
+};
