@@ -1,0 +1,40 @@
+/**
+ * @param {string[]} transactions
+ * @return {string[]}
+ */
+ 
+ // with O(n*n) time and O(n)  space
+ //https://leetcode.com/problems/invalid-transactions/
+var invalidTransactions = function(transactions) {
+    let parsedTransactions = transactions.map(each => {
+        let res  = each.split(",");
+        res[1]=parseInt(res[1]);
+        res[2]=parseInt(res[2]);
+        return res;
+    });
+    parsedTransactions = parsedTransactions.sort((a,b)=>{
+        return a[0]!=b[0]?a[0]>b[0]?1:-1:a[1]-b[1];
+    })
+    //console.log(parsedTransactions);
+    const invalid = {};
+    for(let i=0;i<parsedTransactions.length;i++){
+        if(parsedTransactions[i][2]>1000)
+            invalid[i]=true;
+        
+            let j=i+1;
+            while(j<parsedTransactions.length && parsedTransactions[j][0] === parsedTransactions[i][0] ){
+                if(parsedTransactions[j][1]-parsedTransactions[i][1] <=60 && parsedTransactions[j][3]!=parsedTransactions[i][3]){
+                invalid[j]=true;
+                invalid[i]=true;
+                }
+                j++;
+            }
+        
+    }
+    //console.log(invalid);
+    const res = [];
+    for(let key in invalid){
+        res.push(parsedTransactions[key].join(","));
+    }
+    return res;
+};
