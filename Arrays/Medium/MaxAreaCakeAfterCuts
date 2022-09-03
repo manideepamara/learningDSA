@@ -1,0 +1,28 @@
+
+
+    //with O(nlogn) time and constant space
+    //https://leetcode.com/problems/maximum-area-of-a-piece-of-cake-after-horizontal-and-vertical-cuts
+    int maxArea(int h, int w, vector<int>& horizontalCuts, vector<int>& verticalCuts) {
+        horizontalCuts.insert(horizontalCuts.begin(),0);
+        horizontalCuts.push_back(h);
+        verticalCuts.insert(verticalCuts.begin(),0);
+        verticalCuts.push_back(w);
+        sort(horizontalCuts.begin(),horizontalCuts.end());
+        sort(verticalCuts.begin(),verticalCuts.end());
+        int hs = horizontalCuts.size();
+        int vs = verticalCuts.size();
+        int hmax = 0,vmax=0;
+        for(int i=1;i<hs;i++){
+            hmax = max(hmax,horizontalCuts[i]-horizontalCuts[i-1]);
+        }
+        for(int i=1;i<vs;i++){
+            vmax = max(vmax,verticalCuts[i]-verticalCuts[i-1]);
+        }
+        
+        long val= (hmax%1000000007);
+        val = (val*vmax%1000000007)%1000000007;
+        return val;
+    }
+
+
+//we can reduce the time to O(n) by using unordered_map; 
