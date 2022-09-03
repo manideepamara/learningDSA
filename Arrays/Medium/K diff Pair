@@ -1,0 +1,23 @@
+    //with O(n) time and space
+    //https://leetcode.com/problems/k-diff-pairs-in-an-array/
+    int findPairs(vector<int>& nums, int k) {
+        
+        int n = nums.size();
+        int count = 0;
+        unordered_map<int,int> mp;
+        for(auto each:nums)
+            mp[each]++;
+        for(auto each:mp){
+            int key = each.first;
+            int value = each.second;
+            if(k==0){
+                if(value>1)
+                    count++;
+            }
+            else{
+                if(mp.count(key-k)>0)
+                    count++;
+            }
+        }
+        return count;
+    }
