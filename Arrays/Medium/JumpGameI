@@ -1,0 +1,15 @@
+   
+   //https://leetcode.com/problems/jump-game/
+   //with O(n) time and constant space
+    bool canJump(vector<int>& nums) {
+        int reachable = nums[0];
+        int n = nums.size();
+        for(int i=0;i<n;i++){
+            if(reachable>=n)
+                return true;
+            if(i>reachable)
+                return false;
+            reachable = max(reachable,i+nums[i]);
+        }
+        return true;
+    }
