@@ -1,4 +1,23 @@
-
+   //https://leetcode.com/problems/jump-game-ii/submissions/
+   
+   
+   //with O(n) time and constant space
+   int jump(vector<int>& nums) {
+        int n = nums.size();
+        int des = nums[0];
+        int current = 0;
+        int jump = 0;
+        for(int i = 0;i<n-1;i++){
+            des = max(des,i+nums[i]);
+            if(i==current){
+                current = des;
+                jump++;
+            }
+        }
+        return jump;
+    }
+    
+    
     //with O(n*n) time and O(n) space
     int jump(vector<int>& nums) {
         int n = nums.size();
@@ -14,3 +33,7 @@
         }
         return dp[n-1];
     }
+
+
+
+    
