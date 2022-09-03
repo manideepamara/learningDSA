@@ -1,0 +1,21 @@
+
+//https://leetcode.com/problems/squares-of-a-sorted-array
+//with O(n) time and space
+class Solution {
+public:
+    vector<int> sortedSquares(vector<int>& nums) {
+        int array[10001]={0};
+        for(auto num:nums){
+            if(num<0)
+                num=-num;
+            array[num]++;
+        }
+        vector<int> res;
+        for(int i=0;i<=10000;i++){
+            while(array[i]--)
+                res.push_back(i*i);
+                
+        }
+        return res;
+    }
+};
