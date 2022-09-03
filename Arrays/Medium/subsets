@@ -1,0 +1,18 @@
+
+    //https://leetcode.com/problems/subsets/
+    //with O(n*2^n) time and O(n*n) space
+    vector<vector<int>> res;
+    void helper(vector<int> nums,int len,vector<int> l){
+        if(len==nums.size())
+            res.push_back(l);
+        else{
+            helper(nums,len+1,l);
+            l.push_back(nums[len]);
+            helper(nums,len+1,l);
+            l.pop_back();
+        }
+    }
+    vector<vector<int>> subsets(vector<int>& nums) {
+        helper(nums,0,{});
+        return res;
+    }
