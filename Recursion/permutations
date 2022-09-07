@@ -1,0 +1,27 @@
+
+//with O(n*n!) time and O(n*n) space
+//https://leetcode.com/problems/permutations/
+class Solution {
+public:
+    vector<vector<int>> res;
+    void helper(vector<int> nums,int pos,vector<int> l,vector<bool> visited){
+        if(pos==nums.size())
+            res.push_back(l);
+        else{
+            for(int i=0;i<nums.size();i++){
+                if(!visited[i]){
+                    l.push_back(nums[i]);
+                    visited[i]=true;
+                    helper(nums,pos+1,l,visited);
+                    visited[i]=false;
+                    l.pop_back();
+                }
+            }
+        }
+    }
+    vector<vector<int>> permute(vector<int>& nums) {
+        vector<bool> visited(nums.size(),false);
+        helper(nums,0,{},visited);
+        return res;
+    }
+};
