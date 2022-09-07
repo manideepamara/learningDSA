@@ -1,0 +1,27 @@
+//https://leetcode.com/problems/combination-sum/
+//with O(2^n*n) time and O(n*n) space
+class Solution {
+public:
+    vector<vector<int>> res;
+    vector<int> li;
+    void helper(int start,int sum,int target,vector<int> l){
+        if(sum>target)
+            return ;
+        if(sum==target)
+            res.push_back(l);
+        else{
+            for(int i = start;i<li.size();i++){
+                l.push_back(li[i]);
+                sum+=li[i];
+                helper(i,sum,target,l);
+                sum-=li[i];
+                l.pop_back();
+            }
+        }
+    }
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        li = candidates;
+        helper(0,0,target,{});
+        return res;
+    }
+};
