@@ -1,0 +1,22 @@
+
+//https://leetcode.com/problems/combinations/
+//with O(k*nCk) time and O(n*n) space
+class Solution {
+public:
+    vector<vector<int>> res;
+    void helper(int start,int len,int n,int k,vector<int> l){
+        if(len==k){
+            res.push_back(l);
+        }else{
+            for(int i=start;i<=n;i++){
+                l.push_back(i);
+                helper(i+1,len+1,n,k,l);
+                l.pop_back();
+            }
+        }
+    }
+    vector<vector<int>> combine(int n, int k) {
+        helper(1,0,n,k,{});
+        return res;
+    }
+};
