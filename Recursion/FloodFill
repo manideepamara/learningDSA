@@ -1,0 +1,24 @@
+
+//with O(n*n) time and space
+class Solution {
+public:
+    vector<vector<bool>> visited;
+    void helper(int row,int col,vector<vector<int>> &image,int color,int startColor){
+        if(row<0 || col<0 || row==image.size()||col==image[0].size() ||visited[row][col]||startColor != image[row][col]){
+            return ;
+        }
+        visited[row][col]=true;
+        image[row][col]=color;
+        helper(row+1,col,image,color,startColor);
+        helper(row-1,col,image,color,startColor);
+        helper(row,col+1,image,color,startColor);
+        helper(row,col-1,image,color,startColor);
+        
+    }
+    vector<vector<int>> floodFill(vector<vector<int>>& image, int sr, int sc, int color) {
+        vector<vector<bool>> v(image.size(),vector<bool>(image[0].size(),false));
+        visited = v;
+        helper(sr,sc,image,color,image[sr][sc]);
+        return image;
+    }
+};
