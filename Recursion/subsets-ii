@@ -1,0 +1,23 @@
+
+//https://leetcode.com/problems/subsets-ii/
+//with O(n*2^n) time and O(n*n) space
+class Solution {
+public:
+    vector<vector<int>> res;
+    void helper(int pos,vector<int> nums,vector<int>  l){
+        if(pos==nums.size())
+            res.push_back(l);
+        else{
+            l.push_back(nums[pos]);
+            helper(pos+1,nums,l);
+            l.pop_back();
+           if(l.size()==0 || l[l.size()-1]!=nums[pos])
+               helper(pos+1,nums,l);
+        }
+    }
+    vector<vector <int>> subsetsWithDup(vector<int>& nums) {
+        sort(nums.begin(),nums.end());
+        helper(0,nums,{});
+        return res;
+    }
+};
