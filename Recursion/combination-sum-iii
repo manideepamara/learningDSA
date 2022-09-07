@@ -1,0 +1,22 @@
+//https://leetcode.com/problems/combination-sum-iii/
+//with O(2^9*k) time and O(n*n) space
+class Solution {
+public:
+    vector<vector<int>> res;
+    void helper(int start,int sum,int curr,int k,vector<int> l){
+        if(curr>sum || l.size()>k || (curr==sum && l.size()<k)){
+            return;
+        }
+        if(curr==sum)
+            res.push_back(l);
+        for(int i=start;i<=9;i++){
+            l.push_back(i);
+            helper(i+1,sum,curr+i,k,l);
+            l.pop_back();
+        }
+    }
+    vector<vector<int>> combinationSum3(int k, int n) {
+        helper(1,n,0,k,{});
+        return res;
+    }
+};
