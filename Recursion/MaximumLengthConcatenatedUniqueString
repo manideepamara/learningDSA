@@ -1,0 +1,46 @@
+
+//with O(n*2^n*len(word)) time and O(n) space
+//https://leetcode.com/problems/maximum-length-of-a-concatenated-string-with-unique-characters/
+class Solution {
+public:
+    vector<bool> visited;
+    vector<string> array;
+    int getUniqueCount(int pos){
+        int count = 0;
+        vector<bool> lv(26,false);
+        for(auto ch: array[pos]){
+            if(!visited[ch-'a'] && !lv[ch-'a']){
+                count++;
+                lv[ch-'a']=true;
+            }
+       
+       }
+        return count;
+    }
+    int helper(int pos,int count){
+        if(pos==array.size()){
+            return count;
+        }
+        
+        
+        if(getUniqueCount(pos)== array[pos].length()){
+            //include
+            for(auto ch:array[pos])
+                visited[ch-'a']=true;
+            int a = helper(pos+1,count+array[pos].length());
+             for(auto ch:array[pos])
+                visited[ch-'a']=false;
+            //exclude
+            int b = helper(pos+1,count);
+            return max(a,b);
+        }
+        return helper(pos+1,count);
+        
+    }
+    int maxLength(vector<string>& arr) {
+        array = arr;
+        vector<bool> v(26,false);
+        visited = v;
+        return helper(0,0);
+    }
+};
