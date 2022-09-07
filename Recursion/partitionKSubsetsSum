@@ -1,0 +1,40 @@
+
+//with O(k*n*2*n) time and O(n) space
+class Solution {
+public:
+    vector<bool> visited;
+    vector<int> gnums;
+    bool helper(int k,int curr,int sum,int start){
+        if(k==0)
+            return true;
+        if(curr==sum){
+            return helper(k-1,0,sum,0);
+        }
+        for(int i=start;i<gnums.size();i++){
+            if(!visited[i] && curr+gnums[i]<=sum){
+                visited[i]=true;
+                if(helper(k,curr+gnums[i],sum,i+1))
+                    return true;
+                visited[i]=false;
+            }
+        }
+        return false;
+    }
+    bool canPartitionKSubsets(vector<int>& nums, int k) {
+        int sum = 0;
+        gnums = nums;
+        vector<bool> g(nums.size(),false);
+        visited = g;
+        int mv = nums[0];
+        for(auto num:nums){
+            sum+=num;
+            mv=max(num,mv);
+        }
+        
+        if(sum%k==0 && mv<=(sum/k)){
+            return helper(k,0,sum/k,0);
+        }
+        
+        return false;
+    }
+};
