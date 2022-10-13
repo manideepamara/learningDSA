@@ -1,0 +1,29 @@
+
+
+    //https://leetcode.com/problems/number-of-digit-one
+    //with O(log(n)) time and constant space
+    int countDigitOne(int n) {
+        int base = 1;
+        int res = 0;
+        int count = 0;
+        int left = n;
+        while(base<=n){
+            int curr = left%10;
+            left = left/10;
+            int right = n%base;
+            if(curr<1){
+                res+=0;
+            }else if(curr==1){
+                res+= (right+1)+(curr*count*(base/10));
+            }else{
+                res+= (base)+(curr*count*(base/10));
+            }
+           // cout << left <<" "<< curr<<" " << right << "\n";
+            if(base==1000000000)
+                break;
+            base*=10;
+            count++;
+         
+        }
+        return res;
+    }
