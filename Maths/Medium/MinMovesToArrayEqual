@@ -1,0 +1,13 @@
+
+
+    // with O(n) timne and constant space
+    // https://leetcode.com/problems/minimum-moves-to-equal-array-elements
+    int minMoves(vector<int>& nums) {
+        int sum = 0;
+        int mv =nums[0];
+        for(int i=0;i<nums.size();i++){
+            sum+=nums[i];
+            mv=min(mv,nums[i]);
+        }
+        return sum-mv*(nums.size());
+    }
